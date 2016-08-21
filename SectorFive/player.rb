@@ -4,6 +4,8 @@ class Player
   FRICTION = 0.9
 
   def initialize(window)
+    @window = window
+    @radius = 20
     @x = 200
     @y = 200
     @angle = 0
@@ -34,5 +36,17 @@ class Player
     @y += @velocity_y
     @velocity_x *= FRICTION
     @velocity_y *= FRICTION
+    if @x > @window.width - @radius
+      @velocity_x = 0
+      @x = @window.width - @radius
+    end
+    if @x < @radius
+      @velocity_x = 0
+      @x = @radius
+    end
+    if @y > @window.height - @radius
+      @velocity_y = 0
+      @y = @window.height - @radius
+    end
   end
 end
