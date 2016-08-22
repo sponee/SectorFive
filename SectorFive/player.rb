@@ -1,6 +1,7 @@
 class Player
   ROTATION_SPEED = 3
   ACCELERATION = 1
+  BOUNCE_ACCELERATION = 15
   FRICTION = 0.9
 
   def initialize(window)
@@ -37,15 +38,15 @@ class Player
     @velocity_x *= FRICTION
     @velocity_y *= FRICTION
     if @x > @window.width - @radius
-      @velocity_x = 0
+      @velocity_x = -BOUNCE_ACCELERATION
       @x = @window.width - @radius
     end
     if @x < @radius
-      @velocity_x = 0
+      @velocity_x = BOUNCE_ACCELERATION
       @x = @radius
     end
     if @y > @window.height - @radius
-      @velocity_y = 0
+      @velocity_y = -BOUNCE_ACCELERATION
       @y = @window.height - @radius
     end
   end
