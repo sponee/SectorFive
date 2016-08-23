@@ -3,6 +3,7 @@ class Player
   ACCELERATION = 1
   BOUNCE_ACCELERATION = 15
   FRICTION = 0.9
+  attr_reader :x, :y, :angle, :radius
 
   def initialize(window)
     @window = window

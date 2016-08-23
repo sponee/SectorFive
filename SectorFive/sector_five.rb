@@ -1,6 +1,8 @@
 require 'gosu'
 require_relative 'player'
 require_relative 'enemy'
+require_relative 'bullet'
+require_relative 'explosion'
 
 class SectorFive < Gosu::Window
   WIDTH = 800
@@ -11,12 +13,26 @@ class SectorFive < Gosu::Window
     self.caption = 'Sector Five'
     @player = Player.new(self)
     @enemies = []
+    @bullets = []
+    @explosions = []
   end
 
   def draw
     @player.draw
     @enemies.each do |enemy|
       enemy.draw
+    end
+    @bullets.each do |bullet|
+      bullet.draw
+    end
+    @explosions.each do |explosion|
+      explosion.draw
+    end
+  end
+
+  def button_down(id)
+    if id == Gosu::KbSpace
+      @bullets.push Bullet.new(self, @player.x, @player.y, @player.angle)
     end
   end
 
@@ -30,6 +46,30 @@ class SectorFive < Gosu::Window
     end
     @enemies.each do |enemy|
       enemy.move
+    end
+    @bullets.each do |bullet|
+      bullet.move
+    end
+    @enemies.dup.each do |enemy|
+      @bullets.dup.each do |bullet|
+        distance = Gosu.distance(enemy.x, enemy.y, bullet.x, bullet.y)
+        if distance < enemy.radius + bullet.radius
+          @enemies.delete enemy
+          @bullets.delete bullet
+          @explosions.push Explosion.new(self, enemy.x, enemy.y)
+        end
+      end
+    end
+    @explosions.dup.each do |explosion|
+      @explosions.delete explosion if explosion.finished
+    end
+    @enemies.dup.each do |enemy|
+      if enemy.y > HEIGHT + enemy.radius
+        @enemies.delete enemy
+      end
+    end
+    @bullets.dup.each do |bullet|
+      @bullets.delete bullet unless bullet.onscreen?
     end
   end
 end
