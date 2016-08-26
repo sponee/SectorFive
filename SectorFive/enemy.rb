@@ -1,5 +1,4 @@
 class Enemy
-  SPEED = 4
   attr_reader :x, :y, :radius
   
   def initialize(window)
@@ -7,6 +6,7 @@ class Enemy
     @x = rand(window.width - 2 * @radius)
     @y = 0
     @image = Gosu::Image.new('images/enemy.png')
+    @speed = rand(4..8)
   end
 
   def draw
@@ -14,6 +14,6 @@ class Enemy
   end
 
   def move
-    @y += SPEED
+    @y += @speed
   end
 end

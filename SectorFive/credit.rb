@@ -4,11 +4,10 @@ class Credit
 
   def initialize(window, text, x, y)
     @x = x
-    @y, @initial_y = y
+    @y = @initial_y = y
     @text = text
     @font = Gosu::Font.new(24)
   end
-
   def move
     @y -= SPEED
   end
