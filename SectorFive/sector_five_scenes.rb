@@ -111,7 +111,7 @@ class SectorFive < Gosu::Window
     @bottom_message = "Press P to play again, or Q to quit."
     @message_font = Gosu::Font.new(28)
     @credits = []
-    y = 700
+    y = 500
     File.open('credits.txt').each do |line|
       @credits.push (Credit.new(self,line.chomp,100,y))
       y+=30
